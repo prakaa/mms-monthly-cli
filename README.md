@@ -4,6 +4,13 @@ A CLI utility to find and obtain data made available through AEMO's [MMS Monthly
 
 ## Installation
 
+Recommended that you use [`pipx`](https://github.com/pypa/pipx) to install the CLI as it [prevents dependency conflicts](https://github.com/pypa/pipx#overview-what-is-pipx).
+
+```bash
+pipx install mms-monthly-cli
+```
+
+However, you can still install via `pip` if you wish to:
 ```bash
 pip install mms-monthly-cli
 ```
