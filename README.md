@@ -2,6 +2,12 @@
 
 A CLI utility to find and obtain data made available through AEMO's [MMS Monthly Data Archive](http://www.nemweb.com.au/Data_Archive/Wholesale_Electricity/MMSDM/").
 
+## Installation
+
+```bash
+pip install pip install mms-monthly-cli
+```
+
 ## Usage
 
 You can use this package as a module (source code functions within `[mms_monthly.py](./mms_monthly_cli/mms_monthly.py)`) or as a CLI tool to:
