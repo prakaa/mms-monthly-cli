@@ -7,13 +7,22 @@ license = "GPL-3.0-or-later"
 readme = "README.md"
 packages = [{include = "mms_monthly_cli"}]
 
+[tool.poetry.scripts]
+mms-monthly-cli = "mms_monthly_cli.cli:app"
+
 [tool.poetry.dependencies]
 python = "^3.8"
 requests = "^2.31.0"
 bs4 = "^0.0.1"
 tqdm = "^4.65.0"
 user-agent = "^0.1.10"
+typer = {extras = ["all"], version = "^0.9.0"}
 
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.7.0"
+isort = "^5.12.0"
+mypy = "^1.4.1"
 
 [build-system]
 requires = ["poetry-core"]
