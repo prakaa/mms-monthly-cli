@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "mms-monthly-cli"
+version = "0.1.0"
+description = "A package and CLI utility to check for available data and download tables from AEMO's Monthly Data Archive"
+authors = ["prakaa <abiprakash007@gmail.com>"]
+license = "GPL-3.0-or-later"
+readme = "README.md"
+packages = [{include = "mms_monthly_cli"}]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+requests = "^2.31.0"
+bs4 = "^0.0.1"
+tqdm = "^4.65.0"
+user-agent = "^0.1.10"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
