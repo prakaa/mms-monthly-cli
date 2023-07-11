@@ -31,11 +31,7 @@ repos:
     -   id: flake8
 
 # Runs mypy
-# Uses local environment as opposed to mypy-mirror to enable access to dependencies
--   repo: local
+-   repo: https://github.com/pre-commit/mirrors-mypy
+    rev: 'v1.4.1'  # Use the sha / tag you want to point at
     hooks:
     -   id: mypy
-        name: mypy
-        language: system
-        entry: poetry run mypy
-        types: [python]
