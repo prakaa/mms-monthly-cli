@@ -5,7 +5,7 @@ A CLI utility to find and obtain data made available through AEMO's [MMS Monthly
 ## Installation
 
 ```bash
-pip install pip install mms-monthly-cli
+pip install mms-monthly-cli
 ```
 
 ## Usage
