@@ -10,7 +10,7 @@ pip install mms-monthly-cli
 
 ## Usage
 
-You can use this package as a module (source code functions within `[mms_monthly.py](./mms_monthly_cli/mms_monthly.py)`) or as a CLI tool to:
+You can use this package as a module (source code functions within [`mms_monthly.py`](./mms_monthly_cli/mms_monthly.py)) or as a CLI tool to:
 
 1. Inspect what data is available
 2. Download and unzip a table CSV for a particular period (i.e. a month within a year)
