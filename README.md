@@ -2,6 +2,15 @@
 
 A CLI utility to find and obtain data made available through AEMO's [MMS Monthly Data Archive](http://www.nemweb.com.au/Data_Archive/Wholesale_Electricity/MMSDM/).
 
+> **Note**
+> Most users will prefer to use  to access NEMWeb data.
+> This package and its CLI have some overlap with [NEMOSIS](https://github.com/UNSW-CEEM/NEMOSIS)
+> and [NEMSEER](https://github.com/UNSW-CEEM/NEMSEER).
+> However:
+> - NEMOSIS does not provide access to the monthly data archive, and does not allow a user to download certain
+ >   tables such as bid data tables (`BIDPEROFFER`).
+> - NEMSEER is specifically designed to handle PASA and pre-dispatch tables available in the monthly data archive
+
 ## Installation
 
 Recommended that you use [`pipx`](https://github.com/pypa/pipx) to install the CLI as it [prevents dependency conflicts](https://github.com/pypa/pipx#overview-what-is-pipx).
