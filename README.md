@@ -33,8 +33,51 @@ import mms_monthly_cli.mms_monthly as mms_monthly
 This will expose the following functions (accessed using `mms_monthly.<func_name>`):
 
 ```python
+get_years_and_months() -> Dict[int, List[int]]
+```
+```md
+    Years and months with data on NEMWeb MMSDM Historical Data Archive
+    Returns:
+        Months mapped to each year. Data is available for each of these months.
+```
+
+```python
+get_available_tables(year: int, month: int) -> List[str]
+```
+```md
+Tables that can be requested from MMSDM Historical Data Archive for a
+   particular month and year.
+Args:
+    year: Year
+    month: Month
+
+Returns:
+    List of tables associated with that forecast type for that period
+```
+
+```python
+get_table_names_and_sizes(year: int, month: int) -> Dict
+```
+```md
+Returns table names and sizes from MMSDM Historical Data Archive page
+
+For a year and month in the MMSDM Historical Data Archive, returns a list of
+tuples each consisting of:
+- A table name (obtained via captured regex group)
+- The size of the associated zip file
+
+Args:
+    year: Year
+    month: Month
+    regex: Regular expression pattern, with one group capture
+Returns:
+    Tuple of table names and file sizes
+```
+
+```python
 get_and_unzip_table_csv(year: int, month: int, table: str, cache: pathlib.Path) -> None
 ```
+```md
 Unzipped (single) csv file downloaded from `url` to `cache`
 
 This function:
@@ -49,43 +92,7 @@ Args:
     cache: Path to save zip.
 Returns:
     None. Extracts csv to `cache`
-
-```python
-get_available_tables(year: int, month: int) -> List[str]
-```
-Tables that can be requested from MMSDM Historical Data Archive for a
-   particular month and year.
-Args:
-    year: Year
-    month: Month
-
-Returns:
-    List of tables associated with that forecast type for that period
-
-```python
-get_table_names_and_sizes(year: int, month: int) -> Dict
-```
-Returns table names and sizes from MMSDM Historical Data Archive page
-
-For a year and month in the MMSDM Historical Data Archive, returns a list of
-tuples each consisting of:
-- A table name (obtained via captured regex group)
-- The size of the associated zip file
-
-Args:
-    year: Year
-    month: Month
-    regex: Regular expression pattern, with one group capture
-Returns:
-    Tuple of table names and file sizes
-
-```python
-get_years_and_months() -> Dict[int, List[int]]
-```
-    Years and months with data on NEMWeb MMSDM Historical Data Archive
-    Returns:
-        Months mapped to each year. Data is available for each of these months.
-```
+```md
 
 ### CLI tool
 
