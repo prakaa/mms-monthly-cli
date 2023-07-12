@@ -4,7 +4,6 @@ A CLI utility to find and obtain data made available through AEMO's [MMS Monthly
 
 > **Note**
 > 
-> Most users will prefer to use  to access NEMWeb data.
 > This package and its CLI have some overlap with [NEMOSIS](https://github.com/UNSW-CEEM/NEMOSIS)
 > and [NEMSEER](https://github.com/UNSW-CEEM/NEMSEER).
 > However:
