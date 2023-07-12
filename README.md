@@ -22,6 +22,64 @@ You can use this package as a module (source code functions within [`mms_monthly
 1. Inspect what data is available
 2. Download and unzip a table CSV for a particular period (i.e. a month within a year)
 
+### Python module
+
+Simply import `mms_monthly_cli` as follows:
+
+```python
+import mms_monthly_cli.mms_monthly as mms_monthly
+```
+
+This will expose the following functions (accessed using `mms_monthly.<func_name>`):
+
+```python
+    get_and_unzip_table_csv(year: int, month: int, table: str, cache: pathlib.Path) -> None
+        Unzipped (single) csv file downloaded from `url` to `cache`
+
+        This function:
+
+        1. Downloads zip file in chunks to limit memory use and enable progress bar
+        2. Validates that the zip contains a single file that has the same name as the zip
+
+        Args:
+            year: Year
+            month: Month
+            table: Table name
+            cache: Path to save zip.
+        Returns:
+            None. Extracts csv to `cache`
+
+    get_available_tables(year: int, month: int) -> List[str]
+        Tables that can be requested from MMSDM Historical Data Archive for a
+           particular month and year.
+        Args:
+            year: Year
+            month: Month
+
+        Returns:
+            List of tables associated with that forecast type for that period
+
+    get_table_names_and_sizes(year: int, month: int) -> Dict
+        Returns table names and sizes from MMSDM Historical Data Archive page
+
+        For a year and month in the MMSDM Historical Data Archive, returns a list of
+        tuples each consisting of:
+        - A table name (obtained via captured regex group)
+        - The size of the associated zip file
+
+        Args:
+            year: Year
+            month: Month
+            regex: Regular expression pattern, with one group capture
+        Returns:
+            Tuple of table names and file sizes
+
+    get_years_and_months() -> Dict[int, List[int]]
+        Years and months with data on NEMWeb MMSDM Historical Data Archive
+        Returns:
+            Months mapped to each year. Data is available for each of these months.
+```
+
 ### CLI tool
 
 The CLI tool uses [Typer](https://typer.tiangolo.com/).
