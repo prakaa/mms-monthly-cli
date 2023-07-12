@@ -9,7 +9,7 @@ A CLI utility to find and obtain data made available through AEMO's [MMS Monthly
 > However:
 > - NEMOSIS does not provide access to the monthly data archive, and does not allow a user to download certain
  >   tables such as bid data tables (`BIDPEROFFER`).
-> - NEMSEER is specifically designed to handle PASA and pre-dispatch tables available in the monthly data archive
+> - NEMSEER only handles PASA and pre-dispatch tables available in the monthly data archive.
 
 ## Installation
 
