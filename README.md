@@ -36,9 +36,9 @@ This will expose the following functions (accessed using `mms_monthly.<func_name
 get_years_and_months() -> Dict[int, List[int]]
 ```
 ```md
-    Years and months with data on NEMWeb MMSDM Historical Data Archive
-    Returns:
-        Months mapped to each year. Data is available for each of these months.
+Years and months with data on NEMWeb MMSDM Historical Data Archive
+Returns:
+    Months mapped to each year. Data is available for each of these months.
 ```
 
 ```python
@@ -92,7 +92,7 @@ Args:
     cache: Path to save zip.
 Returns:
     None. Extracts csv to `cache`
-```md
+```
 
 ### CLI tool
 
