@@ -21,6 +21,7 @@ from rich import print
 from typing_extensions import Annotated
 
 from .mms_monthly import (
+    _validate_data_dir,
     get_and_unzip_table_csv,
     get_available_tables,
     get_years_and_months,
@@ -45,11 +46,21 @@ def available_periods():
 
 
 @app.command(no_args_is_help=True)
-def available_tables(year: int, month: int):
+def available_tables(
+    year: int,
+    month: int,
+    data_dir: Annotated[
+        str,
+        typer.Argument(
+            help=("NEMWeb data directory to look at. Default is `DATA`."),
+        ),
+    ] = "DATA",
+):
     """
     Displays available tables for a period (i.e. supplied month and year)
     """
-    print(get_available_tables(year, month))
+    _validate_data_dir(year, month, data_dir)
+    print(get_available_tables(year, month, data_dir))
 
 
 @app.command(no_args_is_help=True)
@@ -63,10 +74,17 @@ def get_table(
             help="Directory to save data to. If it does not exist, it will be created"
         ),
     ],
+    data_dir: Annotated[
+        str,
+        typer.Argument(
+            help=("NEMWeb data directory to look at. Default is `DATA`."),
+        ),
+    ] = "DATA",
 ):
     """
     Download and unzip monthly data zip file to get data table CSV in cache.
     To see available periods, use the `available_periods` command
     To see available tables for a given period, use the `available_tables` command
     """
-    get_and_unzip_table_csv(year, month, table, cache)
+    _validate_data_dir(year, month, data_dir)
+    get_and_unzip_table_csv(year, month, data_dir, table, cache)

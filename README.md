@@ -3,13 +3,14 @@
 A CLI utility to find and obtain data made available through AEMO's [MMS Monthly Data Archive](http://www.nemweb.com.au/Data_Archive/Wholesale_Electricity/MMSDM/).
 
 > **Note**
-> 
+>
 > This package and its CLI have some overlap with [NEMOSIS](https://github.com/UNSW-CEEM/NEMOSIS)
 > and [NEMSEER](https://github.com/UNSW-CEEM/NEMSEER).
 > However:
 > - NEMOSIS does not provide access to the monthly data archive, and does not allow a user to download certain
  >   tables such as bid data tables (`BIDPEROFFER`).
-> - NEMSEER only handles PASA and pre-dispatch tables available in the monthly data archive.
+> - NEMSEER only handles PASA and pre-dispatch tables available in the monthly data archive, though it
+>   provides a lot of useful utilities for handling these tables
 
 ## Installation
 
@@ -51,7 +52,7 @@ Returns:
 ```
 
 ```python
-get_available_tables(year: int, month: int) -> List[str]
+get_available_tables(year: int, month: int, data_dir: str) -> List[str]
 ```
 ```md
 Tables that can be requested from MMSDM Historical Data Archive for a
@@ -59,13 +60,14 @@ Tables that can be requested from MMSDM Historical Data Archive for a
 Args:
     year: Year
     month: Month
+    data_dir: Directory within monthly archives
 
 Returns:
     List of tables associated with that forecast type for that period
 ```
 
 ```python
-get_table_names_and_sizes(year: int, month: int) -> Dict
+get_table_names_and_sizes(year: int, month: int, data_dir: str) -> Dict
 ```
 ```md
 Returns table names and sizes from MMSDM Historical Data Archive page
@@ -78,13 +80,13 @@ tuples each consisting of:
 Args:
     year: Year
     month: Month
-    regex: Regular expression pattern, with one group capture
+    data_dir: Directory within monthly archives
 Returns:
     Tuple of table names and file sizes
 ```
 
 ```python
-get_and_unzip_table_csv(year: int, month: int, table: str, cache: pathlib.Path) -> None
+get_and_unzip_table_csv(year: int, month: int, data_dir: str, table: str, cache: pathlib.Path) -> None
 ```
 ```md
 Unzipped (single) csv file downloaded from `url` to `cache`
@@ -97,6 +99,7 @@ This function:
 Args:
     year: Year
     month: Month
+    data_dir: Directory within monthly archives
     table: Table name
     cache: Path to save zip.
 Returns:
