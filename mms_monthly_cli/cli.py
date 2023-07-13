@@ -65,7 +65,17 @@ def get_table(
         ),
     ],
     path_to_7zip: Annotated[
-        Optional[Path], typer.Argument(help=("Path to 7-Zip binary. For UNIX system"))
+        Optional[Path],
+        typer.Argument(
+            help=(
+                "Path to 7-Zip binary. Can speed up unzipping large files "
+                + "but may be slower for smaller files."
+                + "For UNIX systems (OS X & Linux), "
+                + "this can point to a command line alias (e.g. `7z`). "
+                + "For Windows systems, this should point to the 7-Zip "
+                + "console executable (e.g. `7zr.exe`)"
+            )
+        ),
     ] = None,
 ):
     """

@@ -328,6 +328,7 @@ def get_and_unzip_table_csv(
         month: Month
         table: Table name
         cache: Path to save zip.
+        path_to_7zip (optional): Path to 7-Zip binary/console
     Returns:
         None. Extracts csv to `cache`
     """
@@ -360,10 +361,9 @@ def get_and_unzip_table_csv(
             except BadZipFile:
                 logger.error(f"{z.testzip()} invalid or corrupted")
         else:
-            ret = subprocess.check_output(
+            subprocess.check_output(
                 [str(path_to_7zip), "x", "-tzip", f"-o{cache}", str(file_path)]
             )
-            logging.error(ret)
 
         Path(file_path).unlink()
     else:
