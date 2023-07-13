@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "mms-monthly-cli"
-version = "0.1.0"
+version = "0.2.0"
 description = "A package and CLI utility to check for available data and download tables from AEMO's Monthly Data Archive"
 authors = ["prakaa <abiprakash007@gmail.com>"]
 license = "GPL-3.0-or-later"
