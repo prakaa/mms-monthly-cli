@@ -15,6 +15,7 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 from pathlib import Path
+from typing import Optional
 
 import typer
 from rich import print
@@ -63,10 +64,13 @@ def get_table(
             help="Directory to save data to. If it does not exist, it will be created"
         ),
     ],
+    path_to_7zip: Annotated[
+        Optional[Path], typer.Argument(help=("Path to 7-Zip binary. For UNIX system"))
+    ] = None,
 ):
     """
     Download and unzip monthly data zip file to get data table CSV in cache.
     To see available periods, use the `available_periods` command
     To see available tables for a given period, use the `available_tables` command
     """
-    get_and_unzip_table_csv(year, month, table, cache)
+    get_and_unzip_table_csv(year, month, table, cache, path_to_7zip)

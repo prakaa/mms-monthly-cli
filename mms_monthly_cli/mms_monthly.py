@@ -16,9 +16,10 @@
 
 import logging
 import shutil
+import subprocess
 from pathlib import Path
 from re import match
-from typing import Dict, List
+from typing import Dict, List, Optional
 from zipfile import BadZipFile, ZipFile
 
 import requests
@@ -312,7 +313,9 @@ def get_table_names_and_sizes(year: int, month: int) -> Dict:
     return name_size_dict
 
 
-def get_and_unzip_table_csv(year: int, month: int, table: str, cache: Path) -> None:
+def get_and_unzip_table_csv(
+    year: int, month: int, table: str, cache: Path, path_to_7zip: Optional[Path] = None
+) -> None:
     """Unzipped (single) csv file downloaded from `url` to `cache`
 
     This function:
@@ -350,11 +353,18 @@ def get_and_unzip_table_csv(year: int, month: int, table: str, cache: Path) -> N
         and (fn := match("(.*).[cC][sS][vV]", csvfn.pop()))
         and (fn.group(1) == zfn.group(1))
     ):
-        try:
-            z.extractall(cache)
-            z.close()
-        except BadZipFile:
-            logger.error(f"{z.testzip()} invalid or corrupted")
+        if not path_to_7zip:
+            try:
+                z.extractall(cache)
+                z.close()
+            except BadZipFile:
+                logger.error(f"{z.testzip()} invalid or corrupted")
+        else:
+            ret = subprocess.check_output(
+                [str(path_to_7zip), "x", "-tzip", f"-o{cache}", str(file_path)]
+            )
+            logging.error(ret)
+
         Path(file_path).unlink()
     else:
         raise ValueError(f"Unexpected contents in zipfile from {url}")
