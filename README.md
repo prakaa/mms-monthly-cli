@@ -25,7 +25,7 @@ Recommended that you use [`pipx`](https://github.com/pypa/pipx) to install the C
 pipx install mms-monthly-cli
 ```
 
-However, you can still install via `pip` if you wish to:
+However, you can still install via `pip` if you are only using the Python package:
 ```bash
 pip install mms-monthly-cli
 ```
