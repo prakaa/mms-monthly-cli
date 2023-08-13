@@ -18,9 +18,7 @@ on: # events that trigger this workflow
 jobs:
   # Testing
   test:
-    # Linting/autoformatting is a prerequisite
-    needs: linting-autoformatting
-    # Matrix testing allows us to test multiple Python versions
+    # Matrix testng allows us to test multiple Python versions
     # We will also fail-fast - fail the job if it fails for any context
     strategy:
       fail-fast: true
