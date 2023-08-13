@@ -116,7 +116,7 @@ Returns:
 
 The CLI tool uses [Typer](https://typer.tiangolo.com/).
 
-[![asciicast](https://asciinema.org/a/BuAis9aNDIzayPkjfarUJNyl8.svg)](https://asciinema.org/a/BuAis9aNDIzayPkjfarUJNyl8?loop=true&autplay=true&theme=monokai)
+[![asciicast](https://asciinema.org/a/BuAis9aNDIzayPkjfarUJNyl8.svg)](https://asciinema.org/a/BuAis9aNDIzayPkjfarUJNyl8?loop=1&autoplay=1)
 
 Usage is documented within the tool:
 ```bash
