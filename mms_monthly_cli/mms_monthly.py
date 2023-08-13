@@ -305,6 +305,7 @@ def get_available_tables(year: int, month: int, data_dir: str) -> List[str]:
     Returns:
         List of tables associated with that forecast type for that period
     """
+    _validate_data_dir(year, month, data_dir)
     table_regex = ".*/PUBLIC_DVD_([A-Z_0-9]*)_[0-9]*.zip"
     names = _get_table_names(year, month, data_dir, table_regex)
     return sorted(names)

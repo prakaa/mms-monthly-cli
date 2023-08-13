@@ -1,10 +1,11 @@
 [tool.poetry]
 name = "mms-monthly-cli"
-version = "0.2.0"
+version = "1.0.0"
 description = "A package and CLI utility to check for available data and download tables from AEMO's Monthly Data Archive"
 authors = ["prakaa <abiprakash007@gmail.com>"]
 license = "GPL-3.0-or-later"
 readme = "README.md"
+homepage = "https://github.com/prakaa/mms-monthly-cli"
 packages = [{include = "mms_monthly_cli"}]
 
 [tool.poetry.scripts]
@@ -12,17 +13,38 @@ mms-monthly-cli = "mms_monthly_cli.cli:app"
 
 [tool.poetry.dependencies]
 python = "^3.8"
-requests = "^2.31.0"
-bs4 = "^0.0.1"
-tqdm = "^4.65.0"
-user-agent = "^0.1.10"
+requests = "^2"
+bs4 = "^0.0"
+tqdm = "^4"
+user-agent = "^0.1"
 typer = {extras = ["all"], version = "^0.9.0"}
 
-
 [tool.poetry.group.dev.dependencies]
-black = "^23.7.0"
-isort = "^5.12.0"
-mypy = "^1.4.1"
+black = "^23"
+isort = "^5"
+mypy = "^1"
+pytest = "^7"
+pytest-cov = "^4"
+
+# Config for pytest and pytest-cov
+[tool.pytest.ini_options]
+# path to tests for pytest
+testpaths = ["tests"]
+# addopts = add options
+# -ra means show extra test summary info for all except passed tests
+# --cov points pytest-cov to the src/ dir
+# --cov-branch runs branch coverage. See https://breadcrumbscollector.tech/how-to-use-code-coverage-in-python-with-pytest/
+# --cov-repot html dumps HTML and xml summaries of pytest-cov in the "tests" folder
+addopts = "-ra --cov=mms_monthly_cli/ --cov-branch --cov-report xml:tests/coverage.xml --cov-report html:tests/htmlcov"
+
+# Config isort to be compatible with black
+[tool.isort]
+profile = "black"
+
+# Config for mypy
+[tool.mypy]
+warn_return_any = true
+warn_unused_configs = true
 
 [build-system]
 requires = ["poetry-core"]
