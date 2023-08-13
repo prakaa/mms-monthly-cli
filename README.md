@@ -1,4 +1,8 @@
 # AEMO Monthly Data Archive Tool
+[![PyPI version](https://badge.fury.io/py/mms-monthly-cli.svg)](https://badge.fury.io/py/mms-monthly-cli)
+[![Continuous Integration and Deployment](https://github.com/prakaa/mms-monthly-cli/actions/workflows/cicd.yml/badge.svg)](https://github.com/prakaa/mms-monthly-cli/actions/workflows/cicd.yml)
+[![codecov](https://codecov.io/gh/prakaa/mms-monthly-cli/branch/master/graph/badge.svg?token=WL7DH013Q7)](https://codecov.io/gh/prakaa/mms-monthly-cli)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 A CLI utility to find and obtain data made available through AEMO's [MMS Monthly Data Archive](http://www.nemweb.com.au/Data_Archive/Wholesale_Electricity/MMSDM/).
 
