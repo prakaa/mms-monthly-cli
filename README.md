@@ -116,7 +116,8 @@ Returns:
 
 The CLI tool uses [Typer](https://typer.tiangolo.com/).
 
-[![asciicast](https://asciinema.org/a/BuAis9aNDIzayPkjfarUJNyl8.svg)](https://asciinema.org/a/BuAis9aNDIzayPkjfarUJNyl8?loop=1&autoplay=1)
+![CLI usage](./mms-monthly-cli.gif)
+<sub><sup>GIF produced using [asciinema](https://github.com/asciinema/asciinema) and [agg](https://github.com/asciinema/agg)</sup></sub>
 
 Usage is documented within the tool:
 ```bash
