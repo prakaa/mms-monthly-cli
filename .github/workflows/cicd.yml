@@ -30,43 +30,30 @@ jobs:
         shell: bash
     runs-on: ${{ matrix.os }}
     steps:
-
       # Checkout the repo so the workflow can access it
       - name: Checkout
         uses: actions/checkout@v3
-
       # Install the specified version of poetry
       - name: Get poetry
         uses: snok/install-poetry@v1
         with:
-          version: 1.4.0
           virtualenvs-create: true
           virtualenvs-in-project: true
-
       # Load cached poetry env if it exists
       - name: Load cached venv
-        id: cached-poetry-dependencies
+        id: cached-pip-wheels
         uses: actions/cache@v3
         with:
           path: ~/.cache
           key: venv-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('**/poetry.lock') }}
-
-      # Set up Python, with a cache for poetry deps
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v4
-        with:
-          python-version: ${{ matrix.python-version }}
-          cache: 'poetry'
-
       # Install poetry env with dev group
       - name: Install poetry env with dev group
         run: poetry install --with=dev
-
       # Run tests
       - name: Run tests
         run: |
+          source $VENV
           poetry run pytest
-
       # Code coverage to codecov.io
       - uses: codecov/codecov-action@v3
         with:
