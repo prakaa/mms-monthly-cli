@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "mms-monthly-cli"
-version = "1.0.0"
+version = "1.0.1"
 description = "A package and CLI utility to check for available data and download tables from AEMO's Monthly Data Archive"
 authors = ["prakaa <abiprakash007@gmail.com>"]
 license = "GPL-3.0-or-later"
@@ -14,10 +14,10 @@ mms-monthly-cli = "mms_monthly_cli.cli:app"
 [tool.poetry.dependencies]
 python = "^3.8"
 requests = "^2"
-bs4 = "^0.0"
 tqdm = "^4"
 user-agent = "^0.1"
 typer = {extras = ["all"], version = "^0.9.0"}
+beautifulsoup4 = "^4"
 
 [tool.poetry.group.dev.dependencies]
 black = "^23"
