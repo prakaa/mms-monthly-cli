@@ -23,8 +23,11 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        os: ["ubuntu-latest", "macos-latest"]
+        os: ["ubuntu-latest", "macos-latest", "windows-latest"]
         python-version: ["3.8", "3.9", "3.10", "3.11"]
+    defaults:
+      run:
+        shell: bash
     runs-on: ${{ matrix.os }}
     steps:
 
@@ -43,9 +46,9 @@ jobs:
       # Load cached poetry env if it exists
       - name: Load cached venv
         id: cached-poetry-dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
-          path: .venv
+          path: ~/.cache
           key: venv-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('**/poetry.lock') }}
 
       # Set up Python, with a cache for poetry deps
