@@ -20,7 +20,7 @@ repos:
 
 # Runs black
 -   repo: https://github.com/psf/black
-    rev: 23.9.1
+    rev: 23.10.0
     hooks:
     -   id: black
 
@@ -32,7 +32,7 @@ repos:
 
 # Runs mypy
 -   repo: https://github.com/pre-commit/mirrors-mypy
-    rev: 'v1.5.1'  # Use the sha / tag you want to point at
+    rev: 'v1.6.1'  # Use the sha / tag you want to point at
     hooks:
     -   id: mypy
         additional_dependencies: [types-requests]
