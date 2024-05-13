@@ -20,6 +20,7 @@ from pathlib import Path
 from re import match
 from typing import Dict, List, Union
 from zipfile import BadZipFile, ZipFile
+from time import sleep
 
 import requests
 from bs4 import BeautifulSoup
@@ -96,6 +97,13 @@ def _rerequest_to_obtain_soup(url: str, additional_header: Dict = {}) -> Beautif
     """
     useragent = generate_user_agent()
     r = _request_content(url, useragent, additional_header=additional_header)
+
+    # retry configuration
+    initial_wait = 0.1
+    max_wait = 10
+    backoff = 2
+    wait = initial_wait
+
     while (ok := r.status_code == requests.status_codes.codes["OK"]) < 1:
         r = _request_content(url, useragent, additional_header=additional_header)
         if r.status_code == requests.status_codes.codes["OK"]:
@@ -103,6 +111,9 @@ def _rerequest_to_obtain_soup(url: str, additional_header: Dict = {}) -> Beautif
         else:
             logging.info("Relaunching request")
             useragent = generate_user_agent()
+            sleep(wait)
+            wait = min(wait * backoff, max_wait)
+
     soup = BeautifulSoup(r.content, "html.parser")
     return soup
 
