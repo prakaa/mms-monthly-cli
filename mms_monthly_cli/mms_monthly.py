@@ -34,10 +34,12 @@ logger = logging.getLogger(__name__)
 MMSDM_ARCHIVE_URL = "http://www.nemweb.com.au/Data_Archive/Wholesale_Electricity/MMSDM/"
 """Wholesale electricity data archive base URL"""
 
-# Decorator function to
+# requests session, to re-use TLS and HTTP connection across requests
+# for speed improvement
+_session = requests.Session()
+
 
 # Functions to handle requests and scraped soup
-
 
 def _build_nemweb_get_header(useragent: str) -> Dict[str, str]:
     """Builds request header for GET requests from NEMWeb
@@ -78,7 +80,7 @@ def _request_content(
     header = _build_nemweb_get_header(useragent)
     if additional_header:
         header.update(additional_header)
-    r = requests.get(url, headers=header)
+    r = _session.get(url, headers=header)
     return r
 
 
@@ -208,7 +210,7 @@ def _get_filesize(url: str) -> int:
     Returns:
         File size in bytes
     """
-    h = requests.head(url, headers=_build_nemweb_get_header(generate_user_agent()))
+    h = _session.head(url, headers=_build_nemweb_get_header(generate_user_agent()))
     total_length = int(h.headers.get("Content-Length", 0))
     return total_length
 
@@ -381,7 +383,7 @@ def get_and_unzip_table_csv(
     url = _construct_table_url(year, month, data_dir, table)
     file_name = Path(url).name
     file_path = cache / Path(file_name)
-    with requests.get(url, headers=header, stream=True) as resp:
+    with _session.get(url, headers=header, stream=True) as resp:
         total_length = int(resp.headers.get("Content-Length", 0))
         resp.raise_for_status()
         with tqdm.wrapattr(resp.raw, "read", desc=file_name, total=total_length) as raw:
