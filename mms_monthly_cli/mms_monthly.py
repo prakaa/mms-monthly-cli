@@ -32,7 +32,7 @@ logger = logging.getLogger(__name__)
 
 # Data
 
-MMSDM_ARCHIVE_URL = "http://www.nemweb.com.au/Data_Archive/Wholesale_Electricity/MMSDM/"
+MMSDM_ARCHIVE_URL = "https://www.nemweb.com.au/Data_Archive/Wholesale_Electricity/MMSDM/"
 """Wholesale electricity data archive base URL"""
 
 # requests session, to re-use TLS and HTTP connection across requests
