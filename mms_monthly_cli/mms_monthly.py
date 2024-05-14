@@ -16,12 +16,12 @@
 
 import logging
 import shutil
+from functools import cache
 from pathlib import Path
 from re import match
+from time import sleep
 from typing import Dict, List, Union
 from zipfile import BadZipFile, ZipFile
-from time import sleep
-from functools import cache
 
 import requests
 from bs4 import BeautifulSoup
@@ -32,13 +32,16 @@ logger = logging.getLogger(__name__)
 
 # Data
 
-MMSDM_ARCHIVE_URL = "https://www.nemweb.com.au/Data_Archive/Wholesale_Electricity/MMSDM/"
+MMSDM_ARCHIVE_URL = (
+    "https://www.nemweb.com.au/Data_Archive/Wholesale_Electricity/MMSDM/"
+)
 """Wholesale electricity data archive base URL"""
 
 # requests session, to re-use TLS and HTTP connection across requests
 # for speed improvement
 _session = requests.Session()
-_session.headers.update({
+_session.headers.update(
+    {
         "User-Agent": generate_user_agent(),
         "Accept": (
             "text/html,application/xhtml+xml,application/xml;"
@@ -46,9 +49,11 @@ _session.headers.update({
         ),
         "Connection": "keep-alive",
         "Upgrade-Insecure-Requests": "1",
-})
+    }
+)
 
 # Functions to handle requests and scraped soup
+
 
 def _request_content(url: str, additional_header: Dict = {}) -> requests.Response:
     """Initiates a GET request.
@@ -67,7 +72,7 @@ def _rerequest_to_obtain_soup(url: str, additional_header: Dict = {}) -> Beautif
 
     Args:
         url: URL for GET request.
-        
+
     Returns:
         BeautifulSoup object with parsed HTML.
 
@@ -235,6 +240,7 @@ def _validate_data_dir(year: int, month: int, data_dir: str) -> None:
 
 # Main functions to find available data, or to obtain data
 
+
 @cache
 def get_years_and_months() -> Dict[int, List[int]]:
     """Years and months with data on NEMWeb MMSDM Historical Data Archive
@@ -277,6 +283,7 @@ def get_years_and_months() -> Dict[int, List[int]]:
             months = _get_months(MMSDM_ARCHIVE_URL + f"{year}/")
             yearmonths[year] = months
     return yearmonths
+
 
 @cache
 def get_available_tables(year: int, month: int, data_dir: str) -> List[str]:
