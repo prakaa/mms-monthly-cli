@@ -16,8 +16,10 @@
 
 import logging
 import shutil
+from functools import cache
 from pathlib import Path
 from re import match
+from time import sleep
 from typing import Dict, List, Union
 from zipfile import BadZipFile, ZipFile
 
@@ -30,54 +32,38 @@ logger = logging.getLogger(__name__)
 
 # Data
 
-MMSDM_ARCHIVE_URL = "http://www.nemweb.com.au/Data_Archive/Wholesale_Electricity/MMSDM/"
+MMSDM_ARCHIVE_URL = (
+    "https://www.nemweb.com.au/Data_Archive/Wholesale_Electricity/MMSDM/"
+)
 """Wholesale electricity data archive base URL"""
 
-# Decorator function to
-
-# Functions to handle requests and scraped soup
-
-
-def _build_nemweb_get_header(useragent: str) -> Dict[str, str]:
-    """Builds request header for GET requests from NEMWeb
-
-    Args:
-        useragent: User-Agent string to use
-    Returns:
-        Dict that can be used as a request header
-    """
-    header = {
-        "Host": "www.nemweb.com.au",
-        "User-Agent": useragent,
+# requests session, to re-use TLS and HTTP connection across requests
+# for speed improvement
+_session = requests.Session()
+_session.headers.update(
+    {
+        "User-Agent": generate_user_agent(),
         "Accept": (
             "text/html,application/xhtml+xml,application/xml;"
             + "q=0.9,image/avif,image/webp,*/*;q=0.8"
         ),
-        "Accept-Language": "en-US,en;q=0.5",
-        "Accept-Encoding": "gzip, deflate",
         "Connection": "keep-alive",
         "Upgrade-Insecure-Requests": "1",
     }
-    return header
+)
+
+# Functions to handle requests and scraped soup
 
 
-def _request_content(
-    url: str, useragent: str, additional_header: Dict = {}
-) -> requests.Response:
-    """Initiates a GET request with header information.
+def _request_content(url: str, additional_header: Dict = {}) -> requests.Response:
+    """Initiates a GET request.
 
     Args:
         url: URL for GET request.
-        useragent: User-Agent to use in header.
-        additional_header: Empty dictionary as default. Can be used to add
-            additional header information to GET request.
     Returns:
         requests Response object.
     """
-    header = _build_nemweb_get_header(useragent)
-    if additional_header:
-        header.update(additional_header)
-    r = requests.get(url, headers=header)
+    r = _session.get(url, headers=additional_header)
     return r
 
 
@@ -86,23 +72,28 @@ def _rerequest_to_obtain_soup(url: str, additional_header: Dict = {}) -> Beautif
 
     Args:
         url: URL for GET request.
-        useragent: User-Agent to use in header.
-        additional_header: Empty dictionary as default. Can be used to add
-                           additional header information to GET request.
 
     Returns:
         BeautifulSoup object with parsed HTML.
 
     """
-    useragent = generate_user_agent()
-    r = _request_content(url, useragent, additional_header=additional_header)
+    r = _request_content(url, additional_header)
+
+    # retry configuration
+    initial_wait = 0.1
+    max_wait = 10
+    backoff = 2
+    wait = initial_wait
+
     while (ok := r.status_code == requests.status_codes.codes["OK"]) < 1:
-        r = _request_content(url, useragent, additional_header=additional_header)
+        r = _request_content(url, additional_header)
         if r.status_code == requests.status_codes.codes["OK"]:
             ok += 1
         else:
             logging.info("Relaunching request")
-            useragent = generate_user_agent()
+            sleep(wait)
+            wait = min(wait * backoff, max_wait)
+
     soup = BeautifulSoup(r.content, "html.parser")
     return soup
 
@@ -197,7 +188,7 @@ def _get_filesize(url: str) -> int:
     Returns:
         File size in bytes
     """
-    h = requests.head(url, headers=_build_nemweb_get_header(generate_user_agent()))
+    h = _session.head(url)
     total_length = int(h.headers.get("Content-Length", 0))
     return total_length
 
@@ -250,6 +241,7 @@ def _validate_data_dir(year: int, month: int, data_dir: str) -> None:
 # Main functions to find available data, or to obtain data
 
 
+@cache
 def get_years_and_months() -> Dict[int, List[int]]:
     """Years and months with data on NEMWeb MMSDM Historical Data Archive
     Returns:
@@ -261,7 +253,6 @@ def get_years_and_months() -> Dict[int, List[int]]:
 
         Args:
             url: url for GET request.
-            header: useragent to pass to GET request.
         Returns:
             List of unique months (as integers).
         """
@@ -294,6 +285,7 @@ def get_years_and_months() -> Dict[int, List[int]]:
     return yearmonths
 
 
+@cache
 def get_available_tables(year: int, month: int, data_dir: str) -> List[str]:
     """Tables that can be requested from MMSDM Historical Data Archive for a
        particular month and year.
@@ -311,6 +303,7 @@ def get_available_tables(year: int, month: int, data_dir: str) -> List[str]:
     return sorted(names)
 
 
+@cache
 def get_table_names_and_sizes(year: int, month: int, data_dir: str) -> Dict:
     """Returns table names and sizes from MMSDM Historical Data Archive page
 
@@ -366,11 +359,10 @@ def get_and_unzip_table_csv(
         raise ValueError(f"Table not in available tables for {month}/{year}")
     if not (cache_path := Path(cache)).exists():
         cache_path.mkdir(parents=True)
-    header = _build_nemweb_get_header(generate_user_agent())
     url = _construct_table_url(year, month, data_dir, table)
     file_name = Path(url).name
     file_path = cache / Path(file_name)
-    with requests.get(url, headers=header, stream=True) as resp:
+    with _session.get(url, stream=True) as resp:
         total_length = int(resp.headers.get("Content-Length", 0))
         resp.raise_for_status()
         with tqdm.wrapattr(resp.raw, "read", desc=file_name, total=total_length) as raw:

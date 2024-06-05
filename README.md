@@ -5,7 +5,7 @@
 [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/prakaa/mms-monthly-cli/master.svg)](https://results.pre-commit.ci/latest/github/prakaa/mms-monthly-cli/master)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
-A CLI utility to find and obtain data made available through AEMO's [MMS Monthly Data Archive](http://www.nemweb.com.au/Data_Archive/Wholesale_Electricity/MMSDM/).
+A CLI utility to find and obtain data made available through AEMO's [MMS Monthly Data Archive](https://www.nemweb.com.au/Data_Archive/Wholesale_Electricity/MMSDM/).
 
 > **Note**
 >

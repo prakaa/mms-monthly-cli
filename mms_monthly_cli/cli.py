@@ -32,7 +32,7 @@ app = typer.Typer(
     help=(
         "A CLI utility to find and obtain data made available through "
         + "AEMO's MMS Monthly Data Archive: "
-        + "http://www.nemweb.com.au/Data_Archive/Wholesale_Electricity/MMSDM/"
+        + "https://www.nemweb.com.au/Data_Archive/Wholesale_Electricity/MMSDM/"
     ),
 )
 
