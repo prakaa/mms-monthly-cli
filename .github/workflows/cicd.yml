@@ -55,8 +55,9 @@ jobs:
           source $VENV
           poetry run pytest
       # Code coverage to codecov.io
-      - uses: codecov/codecov-action@v3
+      - uses: codecov/codecov-action@v4
         with:
+          token: ${{ secrets.CODECOV_TOKEN }}
           files: tests/coverage.xml
           flags: unittests # optional
           name: codecov-umbrella # optional
