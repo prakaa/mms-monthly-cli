@@ -150,6 +150,6 @@ Usage: mms-monthly-cli [OPTIONS] COMMAND [ARGS]...
 
 ## License
 
-This tool and associated source code (reused from [`nemseer`](https://github.com/UNSW-CEEM/NEMSEER), which is licensed under GNU GPL-3.0-or-later) was created by Abhijith Prakash.
+This tool and associated source code (reused from [`nemseer`](https://github.com/UNSW-CEEM/NEMSEER), which is licensed under GNU GPL-3.0-or-later) was created by Abhijith Prakash with contributions from Matthew Davis.
 
 This tool and its source code is licensed under the terms of [GNU GPL-3.0-or-later licences](./LICENSE).
