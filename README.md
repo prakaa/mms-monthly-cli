@@ -45,7 +45,14 @@ Simply import `mms_monthly_cli` as follows:
 import mms_monthly_cli.mms_monthly as mms_monthly
 ```
 
-This will expose the following functions (accessed using `mms_monthly.<func_name>`):
+This will expose the functions listed below (accessed using `mms_monthly.<func_name>`).
+
+> [!NOTE]
+> The `data_dir` argument requires you to specify which folder within `MMSDM_YYYY_MM` you are interested in.
+> Most users will be interested in tables within `DATA` (i.e. `data_dir="DATA"`), but you can also access `PREDISP_ALL_DATA` (complete pre-dispatch data)
+> and `P5MIN_ALL_DATA` (complete 5-minute pre-dispatch data).
+>
+> If you are accessing pre-dispatch data, consider using [NEMSEER](https://github.com/UNSW-CEEM/NEMSEER).
 
 ---
 ```python
