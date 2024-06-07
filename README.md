@@ -49,8 +49,13 @@ This will expose the functions listed below (accessed using `mms_monthly.<func_n
 
 > [!NOTE]
 > The `data_dir` argument requires you to specify which folder within `MMSDM_YYYY_MM` you are interested in.
-> Most users will be interested in tables within `DATA` (i.e. `data_dir="DATA"`), but you can also access `PREDISP_ALL_DATA` (complete pre-dispatch data)
-> and `P5MIN_ALL_DATA` (complete 5-minute pre-dispatch data).
+> Most users will be interested in tables within `DATA` (i.e. `data_dir="DATA"`), but you can also access `PREDISP_ALL_DATA` (pre-dispatch data)
+> and `P5MIN_ALL_DATA` (5-minute pre-dispatch data). Data tables in the `PREDISP_ALL_DATA` folders
+> contain *all* forecasts for an interval of interest, whereas `PREDISPATCH` data tables in the `DATA` folder only contain the latest interval
+> (refer to [this part of the NEMSEER docs for more detail](https://nemseer.readthedocs.io/en/latest/quick_start.html#predispatch-tables)).
+> It is unclear if the same is true for `P5MIN_ALL_DATA`; `P5MIN` data tables in `DATA` appear have the same data with some minor differences
+> (e.g. one column name is different in the constraint files).
+
 >
 > If you are accessing pre-dispatch data, consider using [NEMSEER](https://github.com/UNSW-CEEM/NEMSEER).
 
