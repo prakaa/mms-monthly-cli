@@ -57,7 +57,6 @@ This will expose the functions listed below (accessed using `mms_monthly.<func_n
 > (refer to [this part of the NEMSEER docs for more detail](https://nemseer.readthedocs.io/en/latest/quick_start.html#predispatch-tables)).
 > It is unclear if the same is true for `P5MIN_ALL_DATA`; `P5MIN` data tables in `DATA` appear have the same data with some minor differences
 > (e.g. one column name is different in the constraint files).
-
 >
 > If you are accessing pre-dispatch data, consider using [NEMSEER](https://github.com/UNSW-CEEM/NEMSEER).
 
