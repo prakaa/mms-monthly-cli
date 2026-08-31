@@ -134,7 +134,7 @@ def _construct_filename(year: int, month: int, table: str) -> str:
     Returns:
         Filename string without file type
     """
-    (stryear, strmonth) = (str(year), str(month).rjust(2, "0"))
+    stryear, strmonth = (str(year), str(month).rjust(2, "0"))
     prefix = f"PUBLIC_DVD_{table}"
     fn = prefix + f"_{stryear}{strmonth}010000"
     return fn
